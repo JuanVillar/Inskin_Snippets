@@ -1,0 +1,88 @@
+SHADOW INSET AND BORDERS
+  Here i'm using DIVS for each section of the creative to generate the inner borders and shadows ( top - right - bottom - left)
+  
+  HTML
+  
+  <!-- Top Section Divs -->
+  			<div id="top_shadow"></div> 
+  	 		<div id="top_shadow2"></div>
+              
+  <!-- Left Section Div -->
+  			<div id="left_shadow"></div>
+              
+  <!--	Right Section Div -->
+  			<div id="right_shadow"></div>
+              
+  <!-- Bottom Section Divs -->
+  			<div id="bottom_shadow"></div> 
+  	 		<div id="bottom_shadow2"></div>
+ 
+ 
+  CSS
+ 
+  /* Top Section Divs Css */
+  			#top_shadow { 
+                  border-top: solid 1px #F5AE02; 
+                  position: absolute; 
+                  left: 129px; 
+                  bottom: -4px; 
+                  height: 5px; 
+                  width: 45%; 
+   			          -moz-box-shadow: 0px 7px 15px #828282; 
+                  -webkit-box-shadow: 0px 7px 15px #828282; 
+                  box-shadow: 0px 7px 15px #828282; }
+  			#top_shadow2 { 
+                  border-top: solid 1px #F5AE02; 
+                  position: absolute; right: 129px; 
+                  bottom: -4px; 
+                  height: 5px; 
+                  width: 45%; 
+  	 		          -moz-box-shadow: 0px 7px 15px #828282; 
+                  -webkit-box-shadow: 0px 7px 15px #828282; 
+                  box-shadow: 0px 7px 15px #828282; }
+                  
+                  
+  /* Left Section Divs Css */
+  			#left_shadow { 
+                  border-left: solid 1px #F5AE02; 
+                  position: absolute; 
+                  top: 0px; right: -5px; 
+                  height: 100%; width: 5px; 
+                  -moz-box-shadow: 7px 0px 15px #828282; 
+                  -webkit-box-shadow: 7px 0px 15px #828282; 
+                  box-shadow: 7px 0px 15px #828282; }
+                  
+  /* Right Section Divs Css */
+  			#right_shadow { 
+                  border-right: solid 1px #F5AE02; 
+                  position: absolute; 
+                  left: -5px; 
+                  top: 0px; 
+                  height: 100%; 
+                  width: 5px; 
+                  -moz-box-shadow: -7px 0px 15px #828282; 
+                  -webkit-box-shadow: -7px 0px 15px #828282; 
+                  box-shadow: -7px 0px 15px #828282; }
+  
+  
+  /* Bottom Section Divs Css */
+  			#bottom_shadow { 
+              position: absolute; 
+              left: 129px; 
+              top: -5px; 
+              border-bottom: solid 1px #F5AE02; 
+              height: 5px; 
+              width: 45%; 
+  	 		      -moz-box-shadow: 0px -7px 15px #828282; 
+              -webkit-box-shadow: 0px -7px 15px #828282; 
+              box-shadow: 0px -7px 15px #828282; }
+  			#bottom_shadow2 { 
+                  position: absolute; 
+                  right: 129px; 
+                  top: -5px; 
+                  border-bottom: solid 1px #F5AE02; 
+                  height: 5px; 
+                  width: 45%; 
+                  -moz-box-shadow: 0px -7px 15px #828282; 
+                  -webkit-box-shadow: 0px -7px 15px #828282;
+                  box-shadow: 0px -7px 15px #828282; }
