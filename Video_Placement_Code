@@ -1,0 +1,158 @@
+HTML VIDEO CONTAINER --->
+  <div id="video-wrapper">
+            <video id="video1" class="video-js vjs-default-skin" width="290" height="148">
+                <source src="http://inskin.hs.llnwd.net/cdn/CreativeAssets/VIDEO_ASSETS/2015_VIDEOS/Very/PRE_CHRISTMAS/VERY_PRE_CHRISTMAS.mp4" type="video/mp4">
+                    <source src="http://inskin.hs.llnwd.net/cdn/CreativeAssets/VIDEO_ASSETS/2015_VIDEOS/Very/PRE_CHRISTMAS/VERY_PRE_CHRISTMAS.ogv" type="video/ogg">
+            </video>
+            <div id="vid-poster"></div>
+            <!--<div id="vid-play-button"  style="display:none;"></div>-->
+            <div id="vid-play-catcher"></div>
+            <!--<div id="vid-mute-button" style="display:none;"></div>-->
+            <div id="coverCta"></div>
+  </div>
+
+
+CSS CLASSESS FOR CONTAINER --->
+  #video-wrapper {
+      position: absolute;
+      width: 290px;
+      height: 148px;
+      right: 6px;
+      top: 0px;
+      overflow: hidden;
+      z-index: 100;
+      opacity: 0;
+  }
+  #video1 {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0px;
+      left: 0px;
+  }
+  #vid-play-catcher {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: url("about:black");
+      left: 0px;
+      top: 0px;
+      right: auto;
+      bottom: auto;
+  }
+  #vid-play-button {
+      position: absolute;
+      width: 27px;
+      height: 27px;
+      overflow: hidden;
+      background-image: url("http://cdn.inskinmedia.com/InSkinFiles/Flvs/playerControls/playpause2.png");
+      background-position: 0 0;
+      bottom: 5px;
+      right: 36px;
+      display: none;
+  }
+  #vid-mute-button {
+      position: absolute;
+      right: 5px;
+      width: 27px;
+      height: 27px;
+      background-image: url("http://cdn.inskinmedia.com/InSkinFiles/Flvs/playerControls/mute2.png");
+      background-position: 0 0;
+      bottom: 5px;
+      display: none;
+  }
+  #vid-poster {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background-image: url("assets/player.jpg");
+  }
+  #video1_html5_api.vjs-tech {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+  }
+  #coverCta {
+      position: absolute;
+      left: 217px;
+      top: 148px;
+      width: 97px;
+      height: 30px;
+      background-image: url(about:blank);
+      z-index: 101;
+      visibility: hidden;
+      opacity: 0;
+      display: none;
+  }
+
+
+INSIDE ANIMATE FUNCTION --->
+  player = ISM.videojs({
+      'videoId': 'video1',
+      'playButtonId': 'vid-play-catcher',
+      'muteButtonId': 'vid-mute-button',
+      'useDefaultControls': false,
+      'playInFullscreen': tabletMode ? true : false,  // you can set tabletMode variable above
+      'trackingTags': {'start': 2, 'play25': 3, 'play50': 4, 'play75': 5, 'end': 6},
+      'trackingCallback': trackingHandler,
+      'playCallback': onPlayerPlay
+    }, onPlayerReady);
+
+    $("#vid-play-catcher, #vid-mute-button").click(function(e){ e.stopPropagation(); });
+    $("#vid-play-catcher").click(function(e){TweenMax.set(coverCta, {autoAlpha:0}) });  
+    $("#coverCta").click(function(e){ e.stopPropagation(); ISM.eventTag(8); });
+    
+OUTSIDE ANIMATE FUNCTION
+    function onPlayerReady(_player) {
+    player = _player;
+    
+    // Tablet specific stuff
+    if (tabletMode){
+        // Give the player controls in full screen (Android fix)
+        player.controls(true);
+        // Fix for blue highlight problem on Android KitKat
+        var frame = $('#rightFrame, #leftFrame, #topFrame, #bottomFrame');
+        if (frame.length) $(frame).eq(0).css('-webkit-tap-highlight-color', 'rgba(0, 0, 0, 0)');
+        // Remove the big play button from the thumb
+        $('.vjs-big-play-button').css({display: 'none'});
+        // Disable double click and drag gestures when in full screen (Android)
+        $("#video1").on('touchmove', false);
+        $("#video1").bind('touchstart', function preventZoom(e) {
+          var t2 = e.timeStamp
+            , t1 = $(this).data('lastTouch') || t2
+            , dt = t2 - t1
+            , fingers = e.originalEvent.touches.length;
+          $(this).data('lastTouch', t2);
+          if (!dt || dt > 500 || fingers > 1) return; // not double-tap
+    
+          e.preventDefault();
+        });
+    }
+    
+      player.on('pause', refreshControls);
+      player.on('volumechange', refreshControls);
+      player.on('ended', function(){
+          TweenMax.set(coverCta, {autoAlpha:1});
+          $("#vid-poster").show();
+      });
+      player.muted(true);
+      $('#vid-mute-button').one('click', function(e){ ISM.eventTag(7); })
+      refreshControls();
+    }
+
+  function onPlayerPlay() {
+      if (!tabletMode) $("#vid-poster").hide();
+      $("#vid-play-button, #vid-mute-button").show();
+      refreshControls();
+  }
+
+  function refreshControls(){
+    
+      player.muted() ? $("#vid-mute-button").css("background-position", "-27px 0") : $("#vid-mute-button").css("background-position", "0 0");
+      player.paused() ? $("#vid-play-button").css("background-position", "0 0") : $("#vid-play-button").css("background-position", "-27px 0");
+  }
+
+  function trackingHandler(e){
+  }
